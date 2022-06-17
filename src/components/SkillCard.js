@@ -1,0 +1,25 @@
+import React from "react";
+
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
+
+export function SkillCard({ skill }) {
+  return (
+    <TouchableOpacity style={styles.buttonSkill} key={skill}>
+      <Text style={styles.skill}>{skill}</Text>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({
+  skill: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  buttonSkill: {
+    backgroundColor: "#1f1e25",
+    borderRadius: 15,
+    marginTop: 20,
+    padding: 20,
+  },
+});
