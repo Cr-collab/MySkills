@@ -6,6 +6,7 @@ import {
   TextInput,
   Platform,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import { Button } from "../components/Button";
 import { SkillCard } from "../components/SkillCard";
@@ -15,12 +16,17 @@ export function Home() {
   const [mySkills, setMySkills] = useState([]);
 
   function handleAddNewSkill() {
-    setMySkills((oldState) => [...oldState, newSkill]);
+    const data = {
+      id: String(new Date().getTime()),
+      name: newSkill,
+    };
+    setMySkills((oldState) => [...oldState, data]);
     setNewSkill("");
   }
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}> Welcome, Cristiano Azevedo </Text>
+
       <TextInput
         style={styles.input}
         placeholder="New skills"
@@ -31,9 +37,12 @@ export function Home() {
       <Button handleAddNewSkill={handleAddNewSkill} />
 
       <Text style={[styles.title, { marginTop: 50 }]}>My Skills</Text>
-      {mySkills?.map((skill) => (
-        <SkillCard skill={skill} key={skill} />
-      ))}
+
+      <FlatList
+        data={mySkills}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <SkillCard skill={item} />}
+      />
     </SafeAreaView>
   );
 }
