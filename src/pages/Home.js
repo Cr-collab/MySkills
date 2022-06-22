@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   StyleSheet,
   SafeAreaView,
   TextInput,
   Platform,
-  TouchableOpacity,
   FlatList,
 } from "react-native";
 import { Button } from "../components/Button";
@@ -14,6 +13,7 @@ import { SkillCard } from "../components/SkillCard";
 export function Home() {
   const [newSkill, setNewSkill] = useState("");
   const [mySkills, setMySkills] = useState([]);
+  const [greenting, setGreenting] = useState("");
 
   function handleAddNewSkill() {
     const data = {
@@ -23,10 +23,26 @@ export function Home() {
     setMySkills((oldState) => [...oldState, data]);
     setNewSkill("");
   }
+
+  useEffect(() => {
+    const current = new Date().getHours();
+
+    const mornig = current < 12;
+    const afternoon = current >  12 && current < 18;
+
+    if (mornig) {
+      setGreenting("Good Morning");
+    } else if (afternoon) {
+      setGreenting("Good Afternoon");
+    } else {
+      setGreenting("Good Night");
+    }
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}> Welcome, Cristiano Azevedo </Text>
-
+      <Text style={styles.greeting}> {greenting} </Text>
       <TextInput
         style={styles.input}
         placeholder="New skills"
@@ -67,4 +83,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     borderRadius: 10,
   },
+  greeting: {
+    color: "#fff",
+  }
 });
